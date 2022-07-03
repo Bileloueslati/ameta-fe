@@ -1,0 +1,11 @@
+.btn {
+  &.btn-primary {
+    @apply bg-primary text-white hover:opacity-80 border border-primary dark:bg-primary dark:text-white rounded-md px-6 py-2 text-sm font-gotham font-medium;
+  }
+
+  &.btn-outline-primary {
+
+    @apply hover:bg-primary hover:text-white text-primary border border-primary dark:bg-primary dark:text-white rounded-md px-6 py-2 text-sm font-gotham font-medium;
+
+  }
+}

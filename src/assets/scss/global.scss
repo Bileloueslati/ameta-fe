@@ -1,0 +1,13 @@
+@import "./table.scss";
+@import "./btn.scss";
+@import "./form.scss";
+
+body {
+
+    @apply font-futura bg-slate-100 dark:bg-[#1a1d21] transition-all;
+}
+
+a, button {
+
+    @apply transition-all
+}
