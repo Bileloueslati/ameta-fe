@@ -1,13 +1,14 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faMoon, faUser } from "@fortawesome/free-regular-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import DarkMode from "./darkMode";
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
+import DarkMode from './darkMode';
+import NotificationsDropdown from './notificationsDropdown';
+import UserDropDown from './topbar/userDropDown';
 
 export default function TopBar() {
   return (
-    <div className="bg-white text-black shadow-sm text-lg">
+    <div id="topbar">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-x-12">
@@ -15,55 +16,41 @@ export default function TopBar() {
               <img src="/img/atvyl-logo.jpg" className="my-2 h-16" alt="" />
             </Link>
 
-            <ul className="list-inline flex gap-x-12">
-              <li>
-                <Link
-                  className="hover:text-primary font-gotham font-medium"
-                  to="/"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="hover:text-primary font-gotham font-medium"
-                  to="/accounts"
-                >
-                  Accounts
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="hover:text-primary font-gotham font-medium"
-                  to="/sheets"
-                >
-                  Sheets
-                </Link>
-              </li>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/accounts">Accounts</Link>
+                </li>
+                <li>
+                  <Link to="/sheets">Sheets</Link>
+                </li>
 
-              <li>
-                <Link
-                  className="hover:text-primary font-gotham font-medium"
-                  to="/"
-                >
-                  Prints
-                </Link>
-              </li>
-            </ul>
+                <li>
+                  <Link to="/">Prints</Link>
+                </li>
+              </ul>
+            </nav>
           </div>
 
           <div>
-            <ul className="list-inline flex gap-x-8">
+            <ul className="icons">
               <li>
                 <FontAwesomeIcon icon={faSearch as IconProp} />
+              </li>
+
+              <li className="relative dropdown">
+                <NotificationsDropdown />
               </li>
 
               <li>
                 <DarkMode />
               </li>
 
-              <li>
-                <FontAwesomeIcon icon={faUser as IconProp} />
+              <li className="relative dropdown">
+                <UserDropDown />
               </li>
             </ul>
           </div>

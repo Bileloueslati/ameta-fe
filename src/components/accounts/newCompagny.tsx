@@ -1,20 +1,24 @@
-import { Modal } from "flowbite-react";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { useState } from "react";
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Modal } from 'flowbite-react';
+import { useState } from 'react';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 
 export default function NewCompagny() {
   const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => setShow(true);
   return (
     <>
-      <Button variant="outline-primary" onClick={() => setShow(true)}>
+      <Button variant="outline-primary" onClick={handleClose}>
         <FontAwesomeIcon size="sm" icon={faPlus as IconProp} />
         <span className="ml-2">New Compagny</span>
       </Button>
 
-      <Modal size="4xl" show={show} onClose={() => setShow(false)}>
+      <Modal size="4xl" show={show} onClose={handleShow}>
         <Modal.Header>
           <span className="font-gotham font-meidum">Create new Compagny</span>
         </Modal.Header>
@@ -24,11 +28,7 @@ export default function NewCompagny() {
               <Form.Control type="email" placeholder="Email" />
             </FloatingLabel>
 
-            <FloatingLabel
-              controlId="compagny"
-              label="Compagny"
-              className="mb-3"
-            >
+            <FloatingLabel controlId="compagny" label="Compagny" className="mb-3">
               <Form.Control type="text" placeholder="Compagny" />
             </FloatingLabel>
 

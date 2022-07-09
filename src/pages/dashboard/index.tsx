@@ -1,7 +1,6 @@
-import { Carousel } from "flowbite-react";
-import DefaultLayout from "../../components/layouts/defaultLayout";
-import AllSheets from "../../components/sheets/allSheets";
-import StatCard from "../../components/stats/statCard";
+import DefaultLayout from '../../components/layouts/defaultLayout';
+import AllSheets from '../../components/sheets/allSheets';
+import StatCard from '../../components/stats/statCard';
 
 export default function Dashboard() {
   return (

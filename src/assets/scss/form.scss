@@ -1,3 +1,10 @@
-.form-control {
-  @apply dark:dark:bg-[#212529] #{!important};
+.form-control, .form-select {
+  @apply dark:bg-[#1a1d21] dark:border-transparent dark:text-white dark:focus:text-white focus:outline-none dark:focus:bg-[#1a1d21] ring-0 shadow-none focus:border-inherit;
+  &:focus, &:active {
+    box-shadow: none !important
+  }
+}
+
+.form-floating > label, .form-select > label {
+  @apply dark:text-slate-200;
 }

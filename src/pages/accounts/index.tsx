@@ -1,7 +1,7 @@
-import NewAccount from "../../components/accounts/newAccount";
-import NewCompagny from "../../components/accounts/newCompagny";
-import Card from "../../components/common/card";
-import DefaultLayout from "../../components/layouts/defaultLayout";
+import NewAccount from '../../components/accounts/newAccount';
+import NewCompagny from '../../components/accounts/newCompagny';
+import Card from '../../components/common/card';
+import DefaultLayout from '../../components/layouts/defaultLayout';
 
 export default function Accounts() {
   return (

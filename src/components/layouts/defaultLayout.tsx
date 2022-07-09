@@ -1,11 +1,7 @@
-import Footer from "../common/footer";
-import TopBar from "../common/topBar";
+import Footer from '../common/footer';
+import TopBar from '../common/topBar';
 
-export default function DefaultLayout({
-  children,
-}: {
-  children: JSX.Element[] | JSX.Element;
-}) {
+export default function DefaultLayout({ children }: { children: JSX.Element[] | JSX.Element }) {
   return (
     <>
       <header>

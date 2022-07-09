@@ -1,20 +1,25 @@
-import { Modal } from "flowbite-react";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { useState } from "react";
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Modal } from 'flowbite-react';
+import { useState } from 'react';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 
 export default function NewAccount() {
   const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+
+  const handleClose = () => setShow(false);
+
   return (
     <>
-      <Button onClick={() => setShow(true)}>
+      <Button onClick={handleShow}>
         <FontAwesomeIcon size="sm" icon={faPlus as IconProp} />
         <span className="ml-2">New account</span>
       </Button>
 
-      <Modal size="4xl" show={show} onClose={() => setShow(false)}>
+      <Modal size="4xl" show={show} onClose={handleClose}>
         <Modal.Header>
           <span className="font-gotham font-meidum">Create new account</span>
         </Modal.Header>
@@ -24,11 +29,7 @@ export default function NewAccount() {
               <Form.Control type="email" placeholder="Email" />
             </FloatingLabel>
 
-            <FloatingLabel
-              controlId="compagny"
-              label="Compagny"
-              className="mb-3"
-            >
+            <FloatingLabel controlId="compagny" label="Compagny" className="mb-3">
               <Form.Control type="text" placeholder="Compagny" />
             </FloatingLabel>
 

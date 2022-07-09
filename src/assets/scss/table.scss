@@ -8,12 +8,26 @@ table.datatable {
   }
 
   tbody {
-
     @apply bg-white dark:bg-transparent;
 
-    td {
+    tr {
+      @apply transition-all;
+      td {
+        @apply transition-all border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-black dark:text-slate-400;
+      }
 
-        @apply border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-black dark:text-slate-400
+      &:hover {
+        @apply dark:bg-[#1a1d21] bg-slate-100;
+        td {
+          @apply dark:text-white;
+        }
+      }
+
+      &:last-child {
+        td {
+          @apply border-0;
+        }
+      }
     }
   }
 }

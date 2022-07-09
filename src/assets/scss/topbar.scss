@@ -1,0 +1,37 @@
+#topbar {
+  @apply bg-white text-black shadow-sm text-lg;
+
+  nav {
+    ul {
+        @apply flex gap-x-12 items-center;
+      li {
+        @apply hover:text-primary font-gotham font-medium;
+      }
+    }
+  }
+
+  .dropdown {
+    button {
+      @apply bg-transparent border-0 shadow-none text-black p-0 focus:ring-0 focus:dark:ring-0;
+      box-shadow: none !important;
+    }
+
+    svg:last-child {
+      @apply hidden;
+    }
+
+    .py-2 {
+      @apply p-0;
+    }
+
+    .py-1 {
+
+        @apply py-4 px-6
+    }
+  }
+
+  .icons {
+
+    @apply flex items-center gap-x-8;
+  }
+}
