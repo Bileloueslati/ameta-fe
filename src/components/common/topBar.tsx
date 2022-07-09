@@ -12,8 +12,9 @@ export default function TopBar() {
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-x-12">
-            <Link to="/">
-              <img src="/img/atvyl-logo.jpg" className="my-2 h-16" alt="" />
+            <Link to="/" className='relative'>
+              <img src="/img/dark-logo.png" className="my-2 h-16 dark:opacity-0 relative z-30" alt="" />
+              <img src="/img/white-logo.png" className="my-2 h-16 absolute inset-0 z-20" alt="" />
             </Link>
 
             <nav>

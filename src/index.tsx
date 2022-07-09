@@ -2,14 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import store from './store/store';
+import { SWRConfig } from 'swr';
+import { http } from './lib/http';
+import { AxiosResponse } from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-      <Provider store={store}>
-    <App />
+    <Provider store={store}>
+      <SWRConfig
+        value={{
+          fetcher: (url: string, params: any) =>
+            http.get(url, { params }).then((res: AxiosResponse) => res.data)
+        }}>
+        <App />
+      </SWRConfig>
     </Provider>
   </React.StrictMode>
 );

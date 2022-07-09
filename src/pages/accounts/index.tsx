@@ -1,9 +1,15 @@
+import dayjs from 'dayjs';
+import useSWR from 'swr';
 import NewAccount from '../../components/accounts/newAccount';
 import NewCompagny from '../../components/accounts/newCompagny';
 import Card from '../../components/common/card';
 import DefaultLayout from '../../components/layouts/defaultLayout';
+import { Listing } from '../../types/api/listing';
+import { Users } from '../../types/api/user';
 
 export default function Accounts() {
+  const { data } = useSWR<Listing<Users>>('/users');
+
   return (
     <DefaultLayout>
       <Card>
@@ -20,22 +26,23 @@ export default function Accounts() {
           <thead>
             <tr>
               <th>Created On</th>
-              <th>Compagny</th>
+              <th>First name</th>
+              <th>Last name</th>
               <th>Email</th>
-              <th>Country</th>
-              <th>Users</th>
+              <th>Compagny</th>
             </tr>
           </thead>
           <tbody>
-            {Array.from(new Array(10)).map((_, i) => (
-              <tr key={i}>
-                <td>03/09/2021</td>
-                <td>LUSOCARGO</td>
-                <td>contact@lusocargo.com</td>
-                <td>Spain</td>
-                <td>5</td>
-              </tr>
-            ))}
+            {data &&
+              data['hydra:member'].map((user) => (
+                <tr key={user.id}>
+                  <td>{dayjs(user.createdAt).format('DD/MM/YYYY')}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user?.compagny?.name || 'NA'}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </Card>

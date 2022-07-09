@@ -1,9 +1,9 @@
 #topbar {
-  @apply bg-white text-black shadow-sm text-lg;
+  @apply bg-white dark:bg-[#212529] text-black dark:text-slate-400 shadow-sm text-lg;
 
   nav {
     ul {
-        @apply flex gap-x-12 items-center;
+      @apply flex gap-x-12 items-center;
       li {
         @apply hover:text-primary font-gotham font-medium;
       }
@@ -12,7 +12,7 @@
 
   .dropdown {
     button {
-      @apply bg-transparent border-0 shadow-none text-black p-0 focus:ring-0 focus:dark:ring-0;
+      @apply bg-transparent border-0 shadow-none text-black dark:text-slate-400 p-0 focus:ring-0 focus:dark:ring-0;
       box-shadow: none !important;
     }
 
@@ -25,13 +25,11 @@
     }
 
     .py-1 {
-
-        @apply py-4 px-6
+      @apply py-4 px-6;
     }
   }
 
   .icons {
-
     @apply flex items-center gap-x-8;
   }
 }
