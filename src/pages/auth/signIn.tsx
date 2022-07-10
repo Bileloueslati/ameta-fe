@@ -51,24 +51,28 @@ export default function SignIn() {
         <div className="relative flex mb-4">
           <img
             src="/img/dark-logo.png"
-            className="h-16 dark:opacity-0 relative z-30 mx-auto"
+            className="h-16 lg:h-20 dark:opacity-0 relative z-30 mx-auto"
             alt=""
           />
-          <img src="/img/white-logo.png" className="h-16 absolute inset-0 z-20 mx-auto" alt="" />
+          <img
+            src="/img/white-logo.png"
+            className="h-16 lg:h-20 absolute inset-0 z-20 mx-auto"
+            alt=""
+          />
         </div>
-        <div className="bg-white rounded-xl py-8 px-10 flex flex-col shadow-sm">
+        <div className="bg-white dark:bg-dark rounded-xl py-8 px-10 flex flex-col shadow-sm">
           <div className="text-center mb-6">
             <h3 className="text-primary font-bold font-gotham">Welcome Back !</h3>
-            <h4>Sign in to continue to Ameta.</h4>
+            <h4 className="dark:text-slate-200">Sign in to continue to Ameta.</h4>
           </div>
 
-          {maxAttempts > attempts && (
+          {maxAttempts > attempts ? (
             <>
               <ErrorMessage
                 errors={errors}
                 name="credentials"
                 render={({ message }) => (
-                  <div className="bg-red-600 text-white px-2 py-3 text-center mb-3">{message}</div>
+                  <div className="text-primary font-gotham font-medium text-center mb-3">{message}</div>
                 )}
               />
 
@@ -100,9 +104,18 @@ export default function SignIn() {
                 </Button>
               </Form>
             </>
+          ) : (
+            <div className="text-red-600 font-gotham font-medium text-center">
+              Login attempt limit reached
+            </div>
           )}
         </div>
-        <div className="text-xm mt-3 flex justify-end">Forget password ?</div>
+        <div className="relative mt-3">
+          <div className="absolute inset-0 top-1/2 w-full h-[2px] bg-slate-200 z-20"></div>
+          <div className="text-sm z-20 relative table mx-auto bg-slate-100 dark:text-slate-200 dark:bg-fullDark px-4">
+            Forget password ?
+          </div>
+        </div>
       </div>
     </div>
   );

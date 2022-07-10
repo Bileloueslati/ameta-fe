@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import authActions from '../store/auth/authAction';
 import store from '../store/store';
+import { toast } from 'react-toastify';
 
 const config: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_API_END_POINT
@@ -38,6 +40,24 @@ http.interceptors.request.use((config) => {
 
   return config;
 });
+
+/**
+ * Expired JWT
+ */
+
+http.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401 && error.response?.data?.message === 'Expired JWT Token') {
+      console.error('Expired token');
+      localStorage.removeItem('auth');
+      store.dispatch(authActions.logout());
+      toast.error('Please login below to connect.');
+    } else {
+      return error;
+    }
+  }
+);
 
 export const isContraintError = (error: any): boolean =>
   error.hasOwnProperty('propertyPath') ? true : false;

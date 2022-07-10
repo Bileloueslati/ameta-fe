@@ -2,6 +2,9 @@
   @apply bg-white dark:bg-[#212529] text-black dark:text-slate-400 shadow-sm text-lg;
 
   nav {
+     
+    @apply hidden lg:flex;
+
     ul {
       @apply flex gap-x-12 items-center;
       li {
@@ -30,6 +33,6 @@
   }
 
   .icons {
-    @apply flex items-center gap-x-8;
+    @apply flex items-center gap-x-5 lg:gap-x-8;
   }
 }

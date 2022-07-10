@@ -1,12 +1,13 @@
 import { ActionType } from './authAction';
 
 export interface UserAuthType {
-  id: number | null;
+  id: number;
   token: string | null;
   firstName: string | null;
   lastName: string | null;
   email: string | null;
-  roles?: Array<'ROLE_ADMIN' | 'ROLE_USER'>;
+  compagny?: {id: number, name: string};
+  roles: Array<'ROLE_SUPERADMIN' | 'ROLE_ADMIN' | 'ROLE_USER'>;
 }
 
 const initialState = {} as UserAuthType;

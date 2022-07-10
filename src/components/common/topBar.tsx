@@ -2,18 +2,25 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import UseAuth from '../../hooks/useAuth';
 import DarkMode from './darkMode';
 import NotificationsDropdown from './notificationsDropdown';
 import UserDropDown from './topbar/userDropDown';
 
 export default function TopBar() {
+  const { isAdmin } = UseAuth();
+
   return (
     <div id="topbar">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-x-12">
-            <Link to="/" className='relative'>
-              <img src="/img/dark-logo.png" className="my-2 h-16 dark:opacity-0 relative z-30" alt="" />
+          <div className="flex items-center gap-x-8 lg:gap-x-12">
+            <Link to="/" className="relative">
+              <img
+                src="/img/dark-logo.png"
+                className="my-2 h-16 dark:opacity-0 relative z-30"
+                alt=""
+              />
               <img src="/img/white-logo.png" className="my-2 h-16 absolute inset-0 z-20" alt="" />
             </Link>
 
@@ -22,9 +29,12 @@ export default function TopBar() {
                 <li>
                   <Link to="/">Dashboard</Link>
                 </li>
-                <li>
-                  <Link to="/accounts">Accounts</Link>
-                </li>
+                {isAdmin && (
+                  <li>
+                    <Link to="/accounts">Accounts</Link>
+                  </li>
+                )}
+
                 <li>
                   <Link to="/sheets">Sheets</Link>
                 </li>

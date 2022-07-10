@@ -4,10 +4,12 @@ import { faPen, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { SheetT } from '../../types/api/sheet';
+import Date from '../common/date';
 import SheetHeaderModal from './sheetHeaderModal';
 import SheetViewModal from './sheetViewModal';
 
-export default function SheetRow() {
+export default function SheetRow({ sheet }: { sheet: SheetT }) {
   const [showHeader, setShowHeader] = useState(false);
 
   const [show, setShow] = useState(false);
@@ -19,14 +21,26 @@ export default function SheetRow() {
   return (
     <>
       <tr>
-        <td>S2017.110</td>
-        <td>03/09/2021</td>
-        <td>LUSOCARGO</td>
-        <td>09/2022</td>
-        <td>CA-158-VM</td>
-        <td>South Bound</td>
-        <td>M220257</td>
-        <td>LUSOCARGO</td>
+        <td>
+          <span className="text-[11px]">{sheet.reference}</span>
+        </td>
+        <td>
+          <Date date={sheet.createdAt} />
+        </td>
+        <td className="flex flex-col gap-y-1">
+          <span className="uppercase">{sheet.creator?.compagny?.name}</span>
+          <span className="capitalize">{sheet.creator.fullName}</span>
+        </td>
+        <td>
+          <Date date={sheet.shipementDate} />
+        </td>
+        <td>{sheet.plate}</td>
+        <td>{sheet.way}</td>
+        <td>AyvylRef</td>
+        <td className="flex flex-col gap-y-1">
+          <span className="uppercase">{sheet.lastModifier?.compagny?.name}</span>
+          <span className="capitalize">{sheet.lastModifier.fullName}</span>
+        </td>
         <td>
           <ul className="list-inline flex gap-x-5">
             <li>
@@ -47,9 +61,9 @@ export default function SheetRow() {
         </td>
       </tr>
 
-      <SheetHeaderModal {...{ showHeader, setShowHeader, sheet: { id: 'S2017.110' } }} />
+      <SheetHeaderModal {...{ showHeader, setShowHeader, sheet }} />
 
-      <SheetViewModal {...{ show, setShow, sheet: { id: 'S2017.110' } }} />
+      <SheetViewModal {...{ show, setShow, sheet }} />
     </>
   );
 }

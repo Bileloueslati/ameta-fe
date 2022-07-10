@@ -4,10 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'flowbite-react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import UseAuth from '../../../hooks/useAuth';
 import authActions from '../../../store/auth/authAction';
 
 export default function UserDropDown() {
   const dispatch = useDispatch();
+
+  const { firstName, compagny } = UseAuth();
 
   const logout = () => {
     dispatch(authActions.logout());
@@ -18,6 +21,16 @@ export default function UserDropDown() {
       label={
         <>
           <FontAwesomeIcon icon={faUser as IconProp} />
+          <div className="ml-2 hidden lg:flex gap-x-1 capitalize">
+            <span>{firstName}</span>
+            {compagny && (
+              <>
+                <span>|</span>
+
+                <span>{compagny.name}</span>
+              </>
+            )}
+          </div>
         </>
       }>
       <Dropdown.Item>

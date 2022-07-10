@@ -9,5 +9,11 @@ export default function UseAuth() {
 
   const logout = () => dispatch(authActions.logout());
 
-  return { isAuthenticated: !!user.id, user, logout };
+  const { roles } = user;
+
+  const isSuperAdmin = roles?.includes('ROLE_SUPERADMIN');
+
+  const isAdmin = roles?.includes('ROLE_ADMIN');
+
+  return { ...user, isAuthenticated: !!user.id, isSuperAdmin, isAdmin, logout };
 }

@@ -7,6 +7,8 @@ import store from './store/store';
 import { SWRConfig } from 'swr';
 import { http } from './lib/http';
 import { AxiosResponse } from 'axios';
+import { ToastContainer } from 'react-toastify';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -18,6 +20,7 @@ root.render(
             http.get(url, { params }).then((res: AxiosResponse) => res.data)
         }}>
         <App />
+        <ToastContainer />
       </SWRConfig>
     </Provider>
   </React.StrictMode>

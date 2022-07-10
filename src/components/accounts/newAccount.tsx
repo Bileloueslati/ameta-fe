@@ -6,16 +6,25 @@ import { useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import useSWR, { mutate } from 'swr';
+import UseAuth from '../../hooks/useAuth';
 import { http } from '../../lib/http';
 import { Compagny } from '../../types/api/compagny';
 import { Listing } from '../../types/api/listing';
+import { toast } from 'react-toastify';
+import { User } from '../../types/api/user';
 
-export default function NewAccount() {
+type Props = {
+  swrKey: string;
+};
+
+export default function NewAccount({ swrKey }: Props) {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
 
   const handleClose = () => setShow(false);
+
+  const { isSuperAdmin, compagny } = UseAuth();
 
   const { data: compagnies } = useSWR<Listing<Compagny>>('/compagnies');
 
@@ -25,13 +34,21 @@ export default function NewAccount() {
     formState: { isSubmitting, errors }
   } = useForm();
 
-  const onSubmit = async (formData: { [key: string]: string }) => {
+  const onSubmit = async (formData: { [key: string]: string | number }) => {
     try {
-      Object.assign(formData, { roles: [formData.role] });
+      if (isSuperAdmin) {
+        Object.assign(formData, { roles: [formData.role] });
+      }
 
-      await http.post('/users', formData);
+      if (!isSuperAdmin && compagny) {
+        formData.compagny = compagny.id;
+      }
 
-      mutate('/users');
+      const { data: user } = await http.post<User>('/users', formData);
+
+      mutate(swrKey);
+
+      toast.success(`User ${user.firstName} successfully created`);
 
       handleClose();
     } catch (e: any) {}
@@ -49,8 +66,11 @@ export default function NewAccount() {
           <span className="font-gotham font-meidum">Create new account</span>
         </Modal.Header>
         <Modal.Body>
-          <Form className="grid grid-cols-2 gap-x-4" onSubmit={handleSubmit(onSubmit)}>
-            <FloatingLabel controlId="email" label="Email" className="mb-3">
+          <Form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit(onSubmit)}>
+            <FloatingLabel
+              controlId="email"
+              label="Email"
+              className={`${!isSuperAdmin ? 'col-span-2' : ''}`}>
               <Form.Control
                 isInvalid={Boolean(errors.email)}
                 type="email"
@@ -59,14 +79,16 @@ export default function NewAccount() {
               />
             </FloatingLabel>
 
-            <FloatingLabel controlId="roles" label="Role">
-              <Form.Select aria-label="Role" {...register('role')}>
-                <option value="ROLE_ADMIN">ADMIN</option>
-                <option value="ROLE_USER">USER</option>
-              </Form.Select>
-            </FloatingLabel>
+            {isSuperAdmin && (
+              <FloatingLabel controlId="roles" label="Role">
+                <Form.Select aria-label="Role" {...register('role')}>
+                  <option value="ROLE_ADMIN">ADMIN</option>
+                  <option value="ROLE_USER">USER</option>
+                </Form.Select>
+              </FloatingLabel>
+            )}
 
-            <FloatingLabel controlId="firstName" label="First name" className="mb-3">
+            <FloatingLabel controlId="firstName" label="First name">
               <Form.Control
                 isInvalid={Boolean(errors.firstName)}
                 type="text"
@@ -75,7 +97,7 @@ export default function NewAccount() {
               />
             </FloatingLabel>
 
-            <FloatingLabel controlId="lastName" label="Last name" className="mb-3">
+            <FloatingLabel controlId="lastName" label="Last name">
               <Form.Control
                 isInvalid={Boolean(errors.lastName)}
                 type="text"
@@ -85,7 +107,7 @@ export default function NewAccount() {
             </FloatingLabel>
 
             <div className="col-span-2">
-              <FloatingLabel controlId="password" label="Password" className="mb-3">
+              <FloatingLabel controlId="password" label="Password">
                 <Form.Control
                   isInvalid={Boolean(errors.plainPassword)}
                   type="password"
@@ -95,10 +117,10 @@ export default function NewAccount() {
               </FloatingLabel>
             </div>
 
-            {compagnies && compagnies['hydra:member'].length > 0 && (
+            {isSuperAdmin && compagnies && compagnies['hydra:member'].length > 0 && (
               <div className="col-span-2">
                 <FloatingLabel controlId="compagny" label="Compagny">
-                  <Form.Select aria-label="Role" {...register('compagny')}>
+                  <Form.Select aria-label="Role" {...register('compagny', { required: true })}>
                     {compagnies['hydra:member'].map((compagny) => (
                       <option key={compagny.id.toString()} value={compagny.id}>
                         {compagny.name}
