@@ -50,7 +50,6 @@ http.interceptors.response.use(
   (error) => {
     if (error.response.status === 401 && error.response?.data?.message === 'Expired JWT Token') {
       console.error('Expired token');
-      localStorage.removeItem('auth');
       store.dispatch(authActions.logout());
       toast.error('Please login below to connect.');
     } else {
