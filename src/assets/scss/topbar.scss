@@ -2,13 +2,17 @@
   @apply bg-white dark:bg-[#212529] text-black dark:text-slate-400 shadow-sm text-lg;
 
   nav {
-     
     @apply hidden lg:flex;
 
     ul {
       @apply flex gap-x-12 items-center;
       li {
         @apply hover:text-primary font-gotham font-medium;
+        &.active {
+          a {
+            @apply text-primary;
+          }
+        }
       }
     }
   }

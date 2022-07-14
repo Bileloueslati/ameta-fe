@@ -48,12 +48,13 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use(
   (response) => response,
   (error) => {
+ 
     if (error.response.status === 401 && error.response?.data?.message === 'Expired JWT Token') {
       console.error('Expired token');
       store.dispatch(authActions.logout());
       toast.error('Please login below to connect.');
     } else {
-      return error;
+      return Promise.reject(error);
     }
   }
 );

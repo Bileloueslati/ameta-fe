@@ -1,18 +1,28 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dispatch } from 'react';
 import { FloatingLabel, Form, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import Card from '../common/card';
+import qs from 'qs';
 
-export default function SheetsFilter() {
-  const { handleSubmit, register } = useForm();
+type Props = {
+  setSwrKey: Dispatch<string>;
+};
+
+export default function SheetsFilter({ setSwrKey }: Props) {
+  const { handleSubmit, register, reset } = useForm();
 
   const onSubmit = (data: { [key: string]: string }) => {
     const filledData = Object.fromEntries(Object.entries(data).filter(([_, v]) => Boolean(v)));
 
-    console.log(filledData)
+    const qsSearch = qs.stringify(filledData);
 
+    setSwrKey(`/sheets?${qsSearch}`);
+  };
+
+  const resetForm = () => {
+    setSwrKey('/sheets');
+
+    reset();
   };
 
   return (
@@ -32,7 +42,7 @@ export default function SheetsFilter() {
           </FloatingLabel>
 
           <FloatingLabel controlId="id" label="ID" className="mb-3">
-            <Form.Control type="text" placeholder="ID" {...register('id')} />
+            <Form.Control type="text" placeholder="ID" {...register('reference')} />
           </FloatingLabel>
 
           <FloatingLabel controlId="plate" label="Plate" className="mb-3">
@@ -44,10 +54,12 @@ export default function SheetsFilter() {
           </FloatingLabel>
 
           <div className="col-span-1 col-start-4 flex justify-end mt-3">
-            <Button type="submit">
-              <FontAwesomeIcon icon={faSearch as IconProp} />
-              <span className="ml-2">Search</span>
-            </Button>
+            <div className="lg:col-span-4 flex justify-center gap-x-6">
+              <Button variant="outline-primary" onClick={resetForm}>
+                Reset
+              </Button>
+              <Button type="submit">Search</Button>
+            </div>
           </div>
         </div>
       </Form>

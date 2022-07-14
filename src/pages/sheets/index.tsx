@@ -1,12 +1,12 @@
 import DefaultLayout from '../../components/layouts/defaultLayout';
 import AllSheets from '../../components/sheets/allSheets';
-import SheetsFilter from '../../components/sheets/sheetsFilter';
 
 export default function Sheets() {
   return (
     <DefaultLayout>
-      <div className='mb-6'><SheetsFilter /></div>
+      <div className="gap-y-8 flex flex-col">
       <AllSheets />
+      </div>
     </DefaultLayout>
   );
 }

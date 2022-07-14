@@ -1,7 +1,8 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import UseAuth from '../../hooks/useAuth';
 import DarkMode from './darkMode';
 import NotificationsDropdown from './notificationsDropdown';
@@ -9,6 +10,26 @@ import UserDropDown from './topbar/userDropDown';
 
 export default function TopBar() {
   const { isAdmin } = UseAuth();
+
+  const { pathname } = useLocation();
+
+  const [routes, setRoutes] = useState([
+    {
+      name: 'Dashboard',
+      path: '/'
+    },
+    {
+      name: 'Sheets',
+      path: '/sheets'
+    }
+  ]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      setRoutes([...routes, { name: 'Accounts', path: '/accounts' }]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdmin]);
 
   return (
     <div id="topbar">
@@ -26,22 +47,11 @@ export default function TopBar() {
 
             <nav>
               <ul>
-                <li>
-                  <Link to="/">Dashboard</Link>
-                </li>
-                {isAdmin && (
-                  <li>
-                    <Link to="/accounts">Accounts</Link>
+                {routes.map(({ name, path }) => (
+                  <li key={name} className={`${pathname === path ? 'active' : ''}`}>
+                    <Link to={path}>{name}</Link>
                   </li>
-                )}
-
-                <li>
-                  <Link to="/sheets">Sheets</Link>
-                </li>
-
-                <li>
-                  <Link to="/">Prints</Link>
-                </li>
+                ))}
               </ul>
             </nav>
           </div>

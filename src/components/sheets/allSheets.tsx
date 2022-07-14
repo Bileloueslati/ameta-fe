@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useSWR from 'swr';
 import UseAuth from '../../hooks/useAuth';
 import { Listing } from '../../types/api/listing';
@@ -5,16 +6,19 @@ import { SheetT } from '../../types/api/sheet';
 import Card from '../common/card';
 import NewSheetModal from './crud/newSheetModal';
 import SheetRow from './sheetRow';
+import SheetsFilter from './sheetsFilter';
+import { When } from 'react-if';
 
 export default function AllSheets() {
   const { isSuperAdmin } = UseAuth();
 
-  const { data: sheets } = useSWR<Listing<SheetT>>('/sheets');
+  const [swrKey, setSwrKey] = useState('/sheets');
 
-  if (!sheets) return null;
+  const { data: sheets } = useSWR<Listing<SheetT>>(swrKey);
 
   return (
     <>
+      <SheetsFilter setSwrKey={setSwrKey} />
       <Card>
         <div className="flex justify-between items-center pb-3 border-b mb-8 border-slate-100 dark:border-slate-700">
           <h2 className="font-gotham font-medium text-xl text-gray-700 dark:text-white mb-0">
@@ -28,7 +32,8 @@ export default function AllSheets() {
           )}
         </div>
 
-        {sheets['hydra:member'].length ? (
+        {/* // @ts-ignore */}
+        <When condition={Boolean(sheets)}>
           <table className="datatable">
             <thead>
               <tr>
@@ -44,14 +49,13 @@ export default function AllSheets() {
               </tr>
             </thead>
             <tbody>
-              {sheets['hydra:member'].map((sheet) => (
+               {/* // @ts-ignore */}
+              {sheets && sheets['hydra:member'].map((sheet) => (
                 <SheetRow sheet={sheet} key={sheet.id.toString()} />
               ))}
             </tbody>
           </table>
-        ) : (
-          <div className="dark:text-slate-200 text-center font-medium">No sheet found</div>
-        )}
+        </When>
       </Card>
     </>
   );
